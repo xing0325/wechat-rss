@@ -1,0 +1,46 @@
+{
+  "schedule": {
+    "timezone": "Asia/Hong_Kong",
+    "times": ["20:30", "23:00"],
+    "leadMinutes": 30
+  },
+  "subscriptionsFile": "subscriptions.json",
+  "sources": [
+    {
+      "id": "video-yingjiecaijing",
+      "kind": "video",
+      "name": "颖姐财经",
+      "required": true,
+      "identityHint": "证券投资顾问认证，北京丰台，女性头像"
+    },
+    {
+      "id": "video-guhaimuyangren",
+      "kind": "video",
+      "name": "股海牧羊人",
+      "required": true,
+      "identityHint": "证券投资顾问认证，浙江杭州，简介含至知、知行合一"
+    },
+    {
+      "id": "video-caijing-xiaojuanjuan",
+      "kind": "video",
+      "name": "财经小娟娟",
+      "identityHint": "财经自媒体认证，湖南，简介含利他，赚认知内的钱"
+    },
+    {
+      "id": "video-naiba-zhangsir",
+      "kind": "video",
+      "name": "奶爸张sir",
+      "identityHint": "互联网博主认证，天津，简介为投资躺平"
+    },
+    {
+      "id": "article-semiconductor",
+      "kind": "article",
+      "name": "半导体行业观察"
+    }
+  ],
+  "delivery": {
+    "enabled": false,
+    "mode": "native",
+    "chatName": "文件传输助手"
+  }
+}
