@@ -1,0 +1,12 @@
+{
+  "name": "wechat-rss-local",
+  "interface": { "displayName": "微信订阅本地插件" },
+  "plugins": [
+    {
+      "name": "wechat-rss",
+      "source": { "source": "local", "path": "./plugins/wechat-rss" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

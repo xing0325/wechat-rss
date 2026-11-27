@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-Hans">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>微信订阅清单</title>
+<style>
+  :root { color-scheme: light; font: 16px/1.6 "Microsoft YaHei UI", "PingFang SC", sans-serif; color: #19312a; background: #eef3ef; }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  main { width: min(100% - 36px, 650px); margin: clamp(24px, 7vw, 76px) auto; }
+  h1 { margin: 0; font-size: clamp(30px, 6vw, 44px); letter-spacing: -.04em; line-height: 1.2; }
+  header p, .hint { color: #49635a; }
+  header p { margin: 12px 0 25px; }
+  section { background: #fff; border: 1px solid #ccdacf; border-radius: 15px; margin-top: 14px; padding: 16px 20px; }
+  h2 { font-size: 17px; margin: 0 0 8px; }
+  .fixed { display: flex; flex-wrap: wrap; gap: 14px; margin: 0; }
+  .fixed + h2 { margin-top: 14px; }
+  .fixed span { background: #eef5ef; border-radius: 6px; padding: 2px 9px; }
+  label { display: flex; align-items: center; gap: 11px; min-height: 44px; padding: 6px; cursor: pointer; }
+  label + label { border-top: 1px solid #e1eae3; }
+  label:hover, label:focus-within { background: #f2f7f3; }
+  label small { margin-left: auto; color: #49635a; }
+  input { width: 18px; height: 18px; margin: 0; flex: none; accent-color: #13654b; cursor: pointer; }
+  footer { margin-top: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+  button { font: inherit; font-weight: 650; min-height: 44px; border: 0; border-radius: 8px; background: #13654b; color: white; padding: 7px 16px; cursor: pointer; }
+  button:hover { background: #0a503a; }
+  :focus-visible { outline: 2px solid #0a503a; outline-offset: 3px; }
+  #status { font-size: 14px; }
+</style>
+<main>
+  <header>
+    <h1>微信订阅清单</h1>
+    <p>香港时间 20:30 和 23:30 推送。勾选想额外加入的公众号，再下载选择文件。</p>
+  </header>
+  <section aria-labelledby="videos">
+    <h2 id="videos">必看的视频号</h2>
+    <p class="fixed"><span>颖姐财经</span><span>股海牧羊人</span></p>
+    <h2>已加入的其他视频号</h2>
+    <p class="fixed"><span>财经小娟娟</span><span>奶爸张sir</span></p>
+  </section>
+  <section aria-labelledby="articles">
+    <h2 id="articles">公众号和服务号</h2>
+    <div id="choices"></div>
+  </section>
+  <footer>
+    <button id="download" type="button">下载选择文件</button>
+    <span id="status" class="hint" role="status"></span>
+  </footer>
+</main>
+<script>
+  const accounts = [
+    { id: 'article-yingjiecaijing', name: '颖姐财经', included: true },
+    { id: 'article-semiconductor', name: '半导体行业观察', included: true },
+    { id: 'article-naiba-zhangsir', name: '奶爸张 sir', included: true },
+    { id: 'article-ftchinese', name: 'FT中文网' },
+    { id: 'article-guhaimuyangren', name: '股海牧羊人', included: true },
+    { id: 'article-wind', name: 'Wind万得' },
+    { id: 'article-hkex', name: '香港交易所脈搏/HKEx Pulse', identityHint: '微信号 HKExgroup' },
+    { id: 'article-cctv', name: '央视网', identityHint: '央视国际网络有限公司' },
+    { id: 'article-cicc', name: '中金点睛' },
+  ];
+  const choices = document.querySelector('#choices');
+  const status = document.querySelector('#status');
+  const key = 'wechat-rss-selected-articles';
+  let saved = [];
+  try {
+    const stored = JSON.parse(localStorage.getItem(key) ?? '[]');
+    if (Array.isArray(stored)) saved = stored;
+  } catch { /* Download works when the browser disables local storage. */ }
+  for (const account of accounts) {
+    const label = document.createElement('label');
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.value = account.id;
+    box.checked = account.included || saved.includes(account.id);
+    box.disabled = Boolean(account.included);
+    label.append(box, account.name);
+    if (account.included) {
+      const hint = document.createElement('small');
+      hint.textContent = '已加入推送';
+      label.append(hint);
+    }
+    choices.append(label);
+  }
+  function selected() {
+    const checked = new Set(Array.from(choices.querySelectorAll(':checked'), box => box.value));
+    return accounts.filter(account => !account.included && checked.has(account.id));
+  }
+  function updateCount() {
+    const selection = selected();
+    status.textContent = `已额外选中 ${selection.length} 个公众号`;
+    try { localStorage.setItem(key, JSON.stringify(selection.map(account => account.id))); } catch {}
+  }
+  choices.addEventListener('change', updateCount);
+  document.querySelector('#download').addEventListener('click', () => {
+    const sources = selected().map(account => ({ kind: 'article', ...account }));
+    const file = new Blob([JSON.stringify({ sources }, null, 2) + '\n'], { type: 'application/json' });
+    const href = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = 'subscriptions.json';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(href), 1000);
+    status.textContent = `已导出 ${sources.length} 个额外来源，请将文件放到项目目录`;
+  });
+  updateCount();
+</script>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "wechat-rss",
+  "version": "1.0.0",
+  "description": "在本机 Windows 微信巡检指定公众号和视频号，按香港时间准备并投递每日订阅汇总。",
+  "skills": "./skills/",
+  "onboardingSkill": "./skills/wechat-rss/SKILL.md",
+  "interface": {
+    "displayName": "微信订阅推送",
+    "shortDescription": "巡检公众号与视频号并定时推送",
+    "longDescription": "在本机 Windows 用 Computer Use 巡检已登录的微信。记录标题、作者和链接，按香港时间在 20:30 和 23:30 推送结构化汇总。",
+    "category": "Productivity",
+    "capabilities": ["Interactive"],
+    "defaultPrompt": "在这台 Windows 上部署并验收微信订阅推送。"
+  }
+}

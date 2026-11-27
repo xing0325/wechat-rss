@@ -1,0 +1,67 @@
+{
+  "schedule": {
+    "timezone": "Asia/Hong_Kong",
+    "times": [
+      "20:30",
+      "23:30"
+    ],
+    "leadMinutes": 30
+  },
+  "subscriptionsFile": "subscriptions.json",
+  "sources": [
+    {
+      "id": "video-yingjiecaijing",
+      "kind": "video",
+      "name": "颖姐财经",
+      "required": true,
+      "identityHint": "证券投资顾问认证，北京丰台，女性头像"
+    },
+    {
+      "id": "article-yingjiecaijing",
+      "kind": "article",
+      "name": "颖姐财经",
+      "required": true,
+      "identityHint": "北京丰台，头像和天机主力交易模型简介与视频号一致，文章署名颖姐"
+    },
+    {
+      "id": "video-guhaimuyangren",
+      "kind": "video",
+      "name": "股海牧羊人",
+      "required": true,
+      "identityHint": "证券投资顾问认证，浙江杭州，简介含至知、知行合一"
+    },
+    {
+      "id": "article-guhaimuyangren",
+      "kind": "article",
+      "name": "股海牧羊人"
+    },
+    {
+      "id": "video-caijing-xiaojuanjuan",
+      "kind": "video",
+      "name": "财经小娟娟",
+      "identityHint": "财经自媒体认证，湖南，简介含利他，赚认知内的钱"
+    },
+    {
+      "id": "video-naiba-zhangsir",
+      "kind": "video",
+      "name": "奶爸张sir",
+      "identityHint": "互联网博主认证，天津，简介为投资躺平"
+    },
+    {
+      "id": "article-naiba-zhangsir",
+      "kind": "article",
+      "name": "奶爸张 sir",
+      "identityHint": "天津滨海新区，简介为投资躺平，与视频号奶爸张sir双向关联"
+    },
+    {
+      "id": "article-semiconductor",
+      "kind": "article",
+      "name": "半导体行业观察"
+    }
+  ],
+  "delivery": {
+    "enabled": false,
+    "mode": "native",
+    "chatName": "文件传输助手"
+  }
+}
